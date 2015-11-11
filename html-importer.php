@@ -5,6 +5,8 @@ if ( !defined( 'WP_LOAD_IMPORTERS' ) )
 
 // Load Importer API
 require_once ABSPATH . 'wp-admin/includes/import.php';
+// Load phpQuery
+require_once(__DIR__.'/phpQuery/phpQuery/phpQuery.php');
 
 if ( !class_exists( 'WP_Importer' ) ) {
 	$class_wp_importer = ABSPATH . 'wp-admin/includes/class-wp-importer.php';
@@ -515,6 +517,13 @@ class HTML_Import extends WP_Importer {
 				if ( !empty( $tagatt ) )
 					$xquery .= '[@'.$tagatt.'="'.$attval.'"]';
 				$content = $xml->xpath( $xquery );
+				/*
+				$doc = phpQuery::newDocumentHTML($xml);
+				
+				//$content = pq('#content');
+				//echo '<pre>',print_r($content),'</pre>'; exit;
+				echo $doc['#content']; exit;
+				/**/
 				if ( is_array( $content ) && isset( $content[0] ) && is_object( $content[0] ) ) {
 					$my_post['post_content'] = $content[0]->asXML(); // asXML() preserves HTML in content
 				}
